@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vidora</title> 
+    <link rel = "stylesheet" href = "styles.css" /> 
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" /> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+</head>
+<body>
+    <div class = "main-container"> 
+        <hr/>
+        <header class = "header" id = "header">
+             <h1>Vidora</h1> 
+             <nav class = "navbar"> 
+                <div class = "nav-item"> 
+                    <img src = "https://cdn4.vectorstock.com/i/1000x1000/05/08/home-icon-on-black-background-for-graphic-and-web-vector-23210508.jpg" /> 
+                    <a href = "#Home" id = "homeIcon">Home</a>
+                </div>
+                <div class = "nav-item"> 
+                    <img src = "https://as1.ftcdn.net/v2/jpg/02/09/95/42/1000_F_209954204_mHCvAQBIXP7C2zRl5Fbs6MEWOEkaX3cA.jpg" >
+                    <a href = "#About" onclick = "onAbout()">About</a>
+                </div>
+                
+                
+                <button onclick="onSubscribe()">Subscribe</button>
+                
+                
+                
+             </nav> 
+
+        </header>  
+    
+        <div class = "home" id = "Home">  
+            
+            <div class = "description">
+                <h1 class = "heading">Where Clarity & Quality Matters</h1> 
+                <p class = "desc">Watch movies HD, exclusively available on Vidora.</p>
+            </div> 
+            <div class = "search">
+                
+                <input type = "search" placeholder="Search.." id = "searchInput"/>  
+                
+             </div>
+
+            <div class = "carousel-container"> 
+                <h1>Recent Movies</h1>
+                <div id="multiCardCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="1500">
+  <div class="carousel-inner">
+
+    <div class="carousel-item active ">
+      <div class="container">
+        <div class="row">
+          
+          <div class="col-4" onclick="openMovie(2)">
+            <img src="https://images.moneycontrol.com/static-mcnews/2025/05/20250523055029_Squid-Game-Season-3-will-soon-release-on-Netflix.png" class="d-block w-100 img-hover" alt="Squid Game">
+          </div>
+          <div class="col-4" onclick="openMovie(3)">
+            <img src="https://assets-in.bmscdn.com/iedb/movies/images/mobile/listing/medium/f1-the-movie-et00403839-1750674185.jpg" class="d-block w-100 img-hover" alt="F1">
+          </div>
+          <div class="col-4" onclick="openMovie(5)">
+            <img src="https://media.telanganatoday.com/wp-content/uploads/2025/04/Mission-Immposible.jpg" class="d-block w-100 img-hover" alt="MI">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="carousel-item">
+      <div class="container">
+        <div class="row">
+          
+          <div class="col-4" onclick="openMovie(7)">
+            <img src="https://imagesvs.oneindia.com/webp/img/2025/06/kuberaa-movie-review-01-1750388548.jpg" class="d-block w-100" alt="Kuberaa">
+          </div>
+          <div class="col-4" onclick="openMovie(18)">
+            <img src="https://tse2.mm.bing.net/th/id/OIP.DZzEJgSgCLVHrm4segOzagHaEK?pid=Api&P=0&h=180" class="d-block w-100" alt="Event">
+          </div>
+          <div class="col-4" onclick="openMovie(6)">
+            <img src="https://media.telanganatoday.com/wp-content/uploads/2025/06/Kannappa-1.jpg" class="d-block w-100" alt="Kannappa">
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Controls -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#multiCardCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#multiCardCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+  </button>
+</div>
+            </div>
+            
+            <div id="filters" class="d-flex flex-wrap gap-2 mb-3 filters">
+  <select id="genreFilter" class="form-select">
+    <option value="">All Genres</option>
+    <option value="Action">Action</option>
+    <option value="Drama">Drama</option>
+    <option value="Romance">Romance</option>
+    <option value="Comedy">Comedy</option>
+    <option value="Horror">Horror</option>
+    <option value="Thriller">Thriller</option>
+    <option value="Sci-Fi">Sci-Fi</option>
+    <option value="Fantasy">Fantasy</option>
+    <option value="Mythology">Mythology</option>
+  </select>
+
+  <select id="languageFilter" class="form-select">
+    <option value="">All Languages</option>
+    <option value="Telugu">Telugu</option>
+    <option value="Hindi">Hindi</option>
+    <option value="Tamil">Tamil</option>
+    <option value="English">English</option>
+  </select> 
+  
+    <button id = "filterBtn" class = "btn btn-secondary">Apply filters</button>
+  
+</div>
+
+
+
+            <h1 class = "recent-movie-text mt-5" id = "filteredMovies">Trending Movies</h1>
+            <div class = "recent-movies-conatiner" id = "movieCon">
+                
+            </div>
+        </div>
+
+        <div id = "moviePage">
+            <div class = "movie-details-container">
+                <img src = "" id = "movieLogo"/> 
+                <div class = "details">
+                    <h1 id = "movieName"></h1>  
+                    <div> <p id = "movieYear"></p> 
+                    <p id = "movieGenre">
+                    </p>  
+                    </div> 
+                    <p id = "castName"> </p> 
+                    <p id = "directorName"> </p> 
+                    <div class = "btn-con">
+                        <a href = "#Movie"><button class = "trialer-btn">TRAILER</button></a>
+                        <button class = "download-btn">MOVIE DOWNLOAD</button> 
+
+                    </div>
+
+                </div>
+            </div>
+            <div class = "movie-trailer" id = "Movie">
+            <iframe width="750" height="500" id = "embedTrailer"
+                src="https://www.youtube.com/embed/4PggkOo2cKQ" 
+                
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+            </iframe>
+        </div> 
+        <div class = "synopsis">
+            <h1>Synopsis:</h1> 
+            <p id = "movieDesc"></p>
+        </div>
+        <div class = "btn-contain">
+            <button class = "back-home" id = "backHome">Back</button>
+        </div>
+        </div>  
+
+        <div class = "about-page" id = "aboutPage">
+            <h1>About</h1>
+            <p>Vidora is your ultimate destination for discovering, exploring, and enjoying the latest and greatest movies. Our platform brings together a rich collection of films across genres, languages, and eras—curated to match your unique taste.
+
+From thrilling blockbusters to heartwarming dramas, action-packed adventures to inspiring stories, Vidora delivers cinematic experiences straight to your screen.
+
+With real-time updates, detailed movie information, trailers, cast & crew insights, and personalized recommendations, Vidora is designed to help every movie lover make the most of their viewing journey.
+
+Join us in celebrating the art of storytelling, and dive into a world where every movie is just a click away.</p>
+            <div class = "btn-contain">
+                <button class = "back-home" onclick="backHome()">Back</button>
+            </div>
+        </div> 
+
+        <div id="subscribePage" class="subscribe-page hidden">
+            <h1>Choose Your Plan</h1>
+            <div class="plans">
+    <div class="plan">
+      <h2>Basic</h2>
+      <p>Access to 720p streaming</p>
+      <p>₹99/month</p>
+      <button onclick="buyPlan('Basic')">Buy Now</button>
+    </div>
+    <div class="plan">
+      <h2>Premium</h2>
+      <p>1080p + Download access</p>
+      <p>₹199/month</p>
+      <button onclick="buyPlan('Premium')">Buy Now</button>
+    </div>
+    <div class="plan">
+      <h2>Ultra HD</h2>
+      <p>4K Streaming + No Ads</p>
+      <p>₹299/month</p>
+      <button onclick="buyPlan('Ultra HD')">Buy Now</button>
+    </div>
+  </div>
+        </div>
+
+        <div id="thankYouPage" class="thank-you-page hidden">
+  <h1>🎉 Thank You for Subscribing!</h1>
+  <p>Enjoy unlimited entertainment on Vidora.</p>
+  <button onclick="backHome()">Back to Home</button>
+        </div>
+
+          
+                
+    </div>  
+    
+
+ 
+    <footer> 
+        <p>CONTACT   DMCA   T&C</p> 
+        <h1>100% ENTERTAINMENT!</h1>
+        <p>&copy 2025 Vidora</p>
+    </footer> 
+    <script src = "front.js"></script>
+</body>
+</html> 
+
+
+
+
+
+
+
+
+    

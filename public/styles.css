@@ -1,0 +1,420 @@
+*{
+    margin: 0px;  
+    padding: 0px; 
+} 
+.header{ 
+    padding: 50px 80px; 
+    background-color: black;  
+    display: flex;
+    flex-direction: row;  
+    flex-wrap: wrap;
+    
+
+} 
+.header button{ 
+    padding: 6px 10px; 
+    background-color:yellow; 
+    border: none; 
+    border-radius: 10px; 
+    color: black; 
+    font-weight: bold;  
+    font-family: 'Poppins', sans-serif; 
+    margin: 0px 10px;
+
+
+ 
+} 
+.header button:hover{
+    background-color: white;
+}
+.main-container hr{
+    height: 10px; 
+    background-color: yellow;  
+    border: none;  
+    margin: 0px;
+}  
+.header h1{
+    font-family: 'Poppins', sans-serif;
+    color: yellow; 
+    flex-grow: 1;  
+    font-weight: bold;
+} 
+
+.navbar{
+    display: flex;   
+    justify-content: space-between;
+    min-width: 250px;  
+    margin-right: 50px; 
+
+}  
+.nav-item{
+    display: flex; 
+    margin: 0px 20px;
+    align-items: center;
+}
+.navbar a{ 
+    text-decoration: none; 
+    font-family: 'Poppins', sans-serif;
+    color: white;  
+    font-size: 17px; 
+
+}  
+.navbar .nav-item img{
+    border-radius: 50%; 
+    height: 22px; 
+    width: 22px;   
+    margin: 4px;
+    
+
+}  
+.search{
+    display: flex; 
+    align-self: center;
+    height: 25px; 
+    width: 250px; 
+} 
+.search a{
+    align-self: center;
+} 
+.search a i{
+    font-size: 20px;
+}
+.home input{
+    border-radius: 20px; 
+    width: 200px; 
+    padding: 10px 10px; 
+    align-self: center;
+    border: none; 
+    margin-left: 15px;
+    background-color: whitesmoke; 
+    color: black; 
+    font-weight: bold; 
+    flex-shrink: 0;
+
+
+}     
+.home{ 
+    display: flex;  
+    flex-direction: column; 
+    padding: 40px;   
+    padding-top: 0px;
+    background-color: black; 
+    min-height: 100vh;
+
+
+} 
+.home .description{
+    text-align: center;   
+    margin-bottom: 20px;
+    
+    
+} 
+.home .description .heading{ 
+    color: white;
+    font-size: 32px;  
+    font-family: 'Poppins', sans-serif; 
+    margin: 30px;
+}
+.home .description .desc{
+    color: white; 
+    font-size: 18px; 
+
+}
+.recent-movies-conatiner{
+    display: flex;  
+    flex-wrap: wrap;  
+    margin: 30px;  
+    margin-top: 0px;
+    flex-direction: row;  
+    justify-content: space-around; 
+    background-color: rgba(11, 5, 1, 0.121);
+
+}
+.movie-container {
+    margin: 10px;  
+    padding: 10px;  
+    display: flex; 
+    flex-direction: column; 
+    max-width: 220px;
+    background-color: #1a1a1a;  
+    box-shadow: 0 0 10px rgba(255,255,0,0.3); 
+    
+    margin-bottom: 25px;
+
+}  
+.movie-container:hover{
+    transform: scale(1.05);
+}
+.movie-container img{
+    height: 300px; 
+    width: 100%; 
+    margin: 5px 0px;   
+    
+
+ 
+} 
+
+.movie-container p{
+    font-size: 14px; 
+    color: white; 
+    font-family: sans-serif; 
+    margin-bottom: 5px;  
+    
+} 
+.movie-container .year{
+    align-self: flex-start; 
+    padding: 5px; 
+    background-color: skyblue;   
+    border-radius: 8px;  
+    font-family: sans-serif; 
+    font-size: 10px;
+
+}  
+footer{
+    background-color: #1a1a1a; 
+    padding: 35px 40px; 
+    display: flex; 
+    justify-content: space-between;
+} 
+footer p{
+    font-size: 15px;  
+    font-weight: 150;
+    color: white; 
+
+} 
+footer h1{
+    font-size: 22px; 
+    font-family: 'Courier New', Courier, monospace; 
+    color: yellow; 
+    font-weight: bold;
+} 
+
+.search i{
+    color: white; 
+    font-weight: bold; 
+    align-self: center;
+}
+
+/* moviepage styling starting.. */ 
+
+.movie-details-container{
+    padding: 40px;  
+    display: flex;
+    flex-direction: row;  
+    background-color: rgb(54, 51, 51);
+
+} 
+.movie-details-container img{
+    height: 420px; 
+    width: 250px;  
+    margin: 20px 50px;
+} 
+.movie-details-container .details{
+    margin: 20px 0px; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-around; 
+
+}
+
+.movie-details-container .details h1{
+    color: white;  
+    font-family: 'Poppins', sans-serif; 
+    font-weight: bold; 
+    font-size: 42px; 
+
+
+} 
+.movie-details-container .details p {
+    font-weight: 500; 
+    font-family: 'Poppins', sans-serif; 
+    font-size: 16px; 
+    color: white;
+} 
+.movie-details-container .trialer-btn{
+    padding: 10px 20px ; 
+    color: white; 
+    font-weight: 600;  
+    background-color: gray;  
+    margin-right: 15px;  
+    border: none; 
+    font-size: 16px;
+}  
+.movie-details-container .download-btn{
+    padding: 10px 20px ; 
+    color: black; 
+    font-weight: 600;  
+    background-color: yellow;  
+    border: none;
+    font-size: 16px;
+} 
+.movie-details-container button:hover{
+    transform: scale(1.1); 
+
+} 
+.movie-trailer{
+    display: flex; 
+    flex-direction: row; 
+    justify-content: center; 
+    background-color: black; 
+    margin: 30px;
+}
+.synopsis{
+    background-color: black;  
+    padding: 40px 0px;
+
+}
+
+.synopsis h1{
+    font-family: 'Poppins', sans-serif; 
+    color: yellow; 
+    margin:0px; 
+    padding: 0px;  
+    font-size: 20px; 
+} 
+.synopsis p{
+    font-family: 'Poppins', sans-serif; 
+    color: gainsboro; 
+    margin:0px; 
+    padding: 0px;  
+    font-size: 16px; 
+
+}  
+.btn-contain{
+    text-align: center;  
+    background-color: black; 
+    padding: 15px;
+}  
+.back-home{
+    padding: 10px 35px;  
+    border-radius: 15px;  
+    border-width: 0px; 
+    background-color: yellow; 
+    color: black; 
+    font-weight: bold; 
+    font-family: 'Poppins', sans-serif;  
+    font-size: 16px;  
+} 
+.back-home:hover{
+    background-color: lightskyblue; 
+
+} 
+
+.about-page{
+    background-color: black; 
+    padding: 40px;  
+    font-family: 'Poppins', sans-serif;  
+    display: none;  
+    min-height: 80vh;
+
+
+} 
+.about-page h1{
+    color: whitesmoke; 
+    font-size: 35px; 
+    font-weight: 350;  
+    text-align: center; 
+    margin: 10px; 
+    text-decoration: underline;
+} 
+.about-page p{
+    margin: 15px 5px;  
+    color: gray; 
+    font-weight: 300; 
+    font-size: 20px; 
+    text-align: center;
+} 
+.recent-movie-text,
+.carousel-container h1{
+    color: white; 
+    font-family: 'Poppins', sans-serif;  
+    font-weight: bold; 
+    font-size: 28px; 
+    margin: 10px 80px;
+} 
+
+/* subscribe page stylingg */ 
+.subscribe-page, .thank-you-page {
+  background-color: black;
+  color: white;
+  padding: 50px;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  min-height: 100vh;
+}
+.plans {
+  display: flex;
+  justify-content: center;
+  gap: 30px; 
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+.plan {
+  background-color: #1a1a1a;
+  border: 2px solid yellow;
+  padding: 20px;
+  border-radius: 15px;
+  width: 30%;
+}
+.plan h2 {
+  color: yellow;
+}
+.plan p {
+  color: white;
+}
+.plan button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: yellow;
+  color: black;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+}
+.plan button:hover {
+  background-color: lightskyblue;
+}
+.hidden {
+  display: none;
+}
+.thank-you-page button{
+    padding: 6px 15px; 
+    border: none; 
+    border-radius: 12px; 
+    margin: 25px; 
+    background-color: white; 
+    color: black; 
+    font-weight: bold;
+}
+
+.categories-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.category-btn {
+  padding: 4px 12px;
+  border: 1px solid #ffd700;
+  border-radius: 20px;
+  background-color: transparent;
+  color: #ffd700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.category-btn:hover {
+  background-color: #ffd700;
+  color: black;
+}
+
+.category-btn.active {
+  background-color: #ffd700;
+  color: black;
+}
+.filters{
+  align-self: center; 
+  margin-top: 40px;
+}
