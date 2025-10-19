@@ -1,24 +1,15 @@
 {
-  "name": "vidora---fullstack",
+  "name": "vidora",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1" ,
-    "start": "node app.js"
-
-    
+    "start": "node app.js",
+    "postinstall": "npm rebuild sqlite3"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^5.1.0",
-    "sqlite": "^5.1.1",
-    "sqlite3": "^5.1.7"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.10"
+    "express": "^4.18.2",
+    "sqlite": "^4.2.0",
+    "sqlite3": "^5.1.6",
+    "cors": "^2.8.5"
   }
 }
