@@ -9,6 +9,9 @@ const cors = require('cors');
 const app = express()
 app.use(express.json()) 
 app.use(cors()); 
+// Serve frontend
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 let db = null
 
@@ -20,8 +23,9 @@ const initializeAndStartServer = async () => {
       driver: sqlite3.Database,
     })
 
-    app.listen(3000, () => {
-      console.log('Server running at http://localhost:3000')
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+      console.log(`Server running at http://localhost:${PORT}`)
     })
   } catch (e) {
     console.error(`DB Error: ${e.message}`)
