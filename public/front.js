@@ -1,4 +1,8 @@
-const API_BASE = "http://localhost:3000"; // replace with your backend URL
+const API_BASE = window.location.hostname === 'localhost'
+  ? 'http://localhost:3000'
+  : 'https://vidorabyyashwanth89.onrender.com';
+
+//const API_BASE = "http://localhost:3000"; // replace with your backend URL
 
 let homeEl = document.getElementById("Home");  
 let aboutPageEl = document.getElementById("aboutPage"); 
