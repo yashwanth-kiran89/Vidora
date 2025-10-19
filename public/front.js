@@ -1,178 +1,215 @@
-const API_BASE = window.location.hostname === 'localhost'
-  ? 'http://localhost:3000'
-  : 'https://vidorabyyashwanth89.onrender.com';
+const API_BASE = window.location.hostname === 'localhost' 
+    ? 'http://localhost:3000' 
+    : 'https://vidorabyyashwanth89.onrender.com';
 
-//const API_BASE = "http://localhost:3000"; // replace with your backend URL
+// DOM Elements
+const homeEl = document.getElementById("Home");
+const aboutPageEl = document.getElementById("aboutPage");
+const moviePageEl = document.getElementById("moviePage");
+const subscribePageEl = document.getElementById("subscribePage");
+const thankYouPageEl = document.getElementById("thankYouPage");
+const moviesDisplayEl = document.getElementById("movieCon");
 
-let homeEl = document.getElementById("Home");  
-let aboutPageEl = document.getElementById("aboutPage"); 
-let moviePageEl = document.getElementById("moviePage");  
-let subscribePageEl = document.getElementById("subscribePage");
-let thankYouPageEl = document.getElementById("thankYouPage");
-let moviesDisplayEl = document.getElementById("movieCon");
+// Movie detail elements
+const movieLogo = document.getElementById("movieLogo");
+const movieName = document.getElementById("movieName");
+const movieYear = document.getElementById("movieYear");
+const movieGenre = document.getElementById("movieGenre");
+const castName = document.getElementById("castName");
+const directorName = document.getElementById("directorName");
+const embedTrailer = document.getElementById("embedTrailer");
+const movieDescEl = document.getElementById("movieDesc");
 
-let movieLogo = document.getElementById("movieLogo") ; 
-let movieName = document.getElementById("movieName"); 
-let movieYear = document.getElementById("movieYear"); 
-let movieGenre = document.getElementById("movieGenre"); 
-let castName = document.getElementById("castName"); 
-let directorName = document.getElementById("directorName"); 
-let embedTrailer = document.getElementById("embedTrailer"); 
-let movieDescEl = document.getElementById("movieDesc"); 
+// Filter and navigation elements
+const searchEl = document.getElementById("searchInput");
+const genreFilterEl = document.getElementById("genreFilter");
+const languageFilterEl = document.getElementById("languageFilter");
+const filterBtnEl = document.getElementById("filterBtn");
+const backHomeEl = document.getElementById("backHome");
+const homeIconEl = document.getElementById("homeIcon");
 
-let searchEl = document.getElementById("searchInput");  
-let genreFilterEl = document.getElementById("genreFilter"); 
-let languageFilterEl = document.getElementById("languageFilter"); 
-let filterBtnEl = document.getElementById("filterBtn"); 
-let backHomeEl = document.getElementById("backHome"); 
-let homeIconEl = document.getElementById("homeIcon"); 
+// State
+let allMovies = [];
 
-// ---------------- FETCH ALL MOVIES ----------------
+// Show/hide pages
+function showPage(pageToShow) {
+    const pages = [homeEl, moviePageEl, aboutPageEl, subscribePageEl, thankYouPageEl];
+    pages.forEach(page => page.classList.add('hidden'));
+    pageToShow.classList.remove('hidden');
+}
+
+// Fetch all movies
 async function fetchMovies() {
     try {
-        const res = await fetch(`${API_BASE}/movies`);
-        const movies = await res.json();
+        showLoading(true);
+        const response = await fetch(`${API_BASE}/movies`);
+        if (!response.ok) throw new Error('Failed to fetch movies');
+        
+        const movies = await response.json();
+        allMovies = movies;
         renderMovies(movies);
-    } catch (err) {
-        console.error("Error fetching movies:", err);
-        moviesDisplayEl.innerHTML = "<p style='color:red'>Failed to load movies.</p>";
+    } catch (error) {
+        console.error("Error fetching movies:", error);
+        showError("Failed to load movies. Please refresh the page.");
+    } finally {
+        showLoading(false);
     }
 }
 
-// ---------------- RENDER MOVIES ----------------
+// Render movies to the grid
 function renderMovies(movies) {
-    moviesDisplayEl.textContent = "";
-    movies.forEach(movie => {
-        const divEl = document.createElement("div");
-        divEl.classList.add("movie-container");
-        divEl.id = "movie" + movie.id;
+    if (!movies.length) {
+        moviesDisplayEl.innerHTML = '<p class="no-movies">No movies found</p>';
+        return;
+    }
 
-        const imgEl = document.createElement("img");
-        imgEl.src = movie.image;
-
-        const pEl = document.createElement("p");
-        pEl.classList.add("movie-name");
-        pEl.textContent = movie.name;
-
-        const innerCon = document.createElement("div");
-        innerCon.classList.add("year");
-        innerCon.textContent = movie.year;
-
-        divEl.append(imgEl, pEl, innerCon);
-        moviesDisplayEl.appendChild(divEl);
-
-        divEl.onclick = () => openMovie(movie.id);
-    });
+    moviesDisplayEl.innerHTML = movies.map(movie => `
+        <div class="movie-container" onclick="openMovie(${movie.id})">
+            <img src="${movie.image}" alt="${movie.name}" loading="lazy">
+            <p class="movie-name">${movie.name}</p>
+            <div class="year">${movie.year}</div>
+        </div>
+    `).join('');
 }
 
-// ---------------- OPEN MOVIE PAGE ----------------
-async function openMovie(id) {  
+// Open movie details
+async function openMovie(id) {
     try {
-        const res = await fetch(`${API_BASE}/movies/${id}`);
-        const movie = await res.json();
+        showLoading(true);
+        const movie = await fetchMovieById(id);
         if (!movie) return;
 
         document.title = movie.name;
-        homeEl.style.display = "none"; 
-        moviePageEl.style.display = "block";  
-        aboutPageEl.style.display = "none"; 
-
-        movieLogo.src = movie.image;  
-        movieName.textContent = movie.name; 
-        movieYear.textContent = movie.year;   
-        castName.textContent = "Cast : " + movie.cast.join(", ");  
-        directorName.textContent = "Director : " + movie.director;
-        movieGenre.textContent = movie.genres.join("/ ");
-        embedTrailer.src = movie.embed;   
-        movieDescEl.textContent = movie.synopsis;  
-
-    } catch (err) {
-        console.error("Error fetching movie:", err);
+        showPage(moviePageEl);
+        
+        // Update movie details
+        movieLogo.src = movie.image;
+        movieLogo.alt = movie.name;
+        movieName.textContent = movie.name;
+        movieYear.textContent = movie.year;
+        castName.textContent = `Cast: ${movie.cast.join(", ")}`;
+        directorName.textContent = `Director: ${movie.director}`;
+        movieGenre.textContent = movie.genres.join(" / ");
+        embedTrailer.src = movie.embed;
+        movieDescEl.textContent = movie.synopsis;
+        
+    } catch (error) {
+        console.error("Error opening movie:", error);
         alert("Failed to load movie details.");
+    } finally {
+        showLoading(false);
     }
 }
 
-// ---------------- BACK HOME ----------------
-function backHome(){
-    homeEl.style.display = "flex"; 
-    moviePageEl.style.display = "none"; 
-    aboutPageEl.style.display = "none";  
-    subscribePageEl.style.display = "none";
-    thankYouPageEl.style.display = "none";
-    document.title = "Vidora"; 
+// Fetch single movie by ID
+async function fetchMovieById(id) {
+    try {
+        const response = await fetch(`${API_BASE}/movies/${id}`);
+        if (!response.ok) throw new Error('Failed to fetch movie');
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching movie:", error);
+        return null;
+    }
 }
-backHomeEl.onclick = backHome;
-homeIconEl.onclick = backHome;
 
-// ---------------- SEARCH MOVIE ----------------
+// Search functionality
 async function searchMovie() {
     const searchValue = searchEl.value.trim().toLowerCase();
-    if (!searchValue) return alert("OOPS! enter something to search..");
+    if (!searchValue) {
+        alert("Please enter a movie name to search");
+        return;
+    }
 
-    try {
-        const res = await fetch(`${API_BASE}/movies`);
-        const movies = await res.json();
-        const movie = movies.find(m => m.name.toLowerCase() === searchValue);
-        if (movie) openMovie(movie.id);
-        else alert(`OOPS! No results available for "${searchValue}"`);
+    const movie = allMovies.find(m => 
+        m.name.toLowerCase().includes(searchValue)
+    );
+    
+    if (movie) {
+        openMovie(movie.id);
         searchEl.value = "";
-    } catch (err) {
-        console.error("Search failed:", err);
+    } else {
+        alert(`No results found for "${searchValue}"`);
     }
 }
-searchEl.addEventListener("keydown", e => e.key === "Enter" && searchMovie());
 
-// ---------------- ABOUT PAGE ----------------
-function onAbout() {
-    aboutPageEl.style.display = "block"; 
-    homeEl.style.display = "none"; 
-    moviePageEl.style.display = "none"; 
-    subscribePageEl.style.display = "none";
-    thankYouPageEl.style.display = "none";
-    document.title = "Vidora";
+// Filter movies
+async function onFilter() {
+    const genre = genreFilterEl.value;
+    const language = languageFilterEl.value;
+
+    const filtered = allMovies.filter(movie => 
+        (genre === "" || movie.genres.includes(genre)) &&
+        (language === "" || movie.language === language)
+    );
+    
+    renderMovies(filtered);
+    document.getElementById("filteredMovies").textContent = 
+        filtered.length ? "Filtered Movies" : "No Movies Found";
 }
 
-// ---------------- SUBSCRIBE PAGE ----------------
+// Navigation functions
+function backHome() {
+    document.title = "Vidora";
+    showPage(homeEl);
+    searchEl.value = "";
+    // Reset filters and show all movies
+    genreFilterEl.value = "";
+    languageFilterEl.value = "";
+    renderMovies(allMovies);
+    document.getElementById("filteredMovies").textContent = "Trending Movies";
+}
+
+function onAbout() {
+    document.title = "About - Vidora";
+    showPage(aboutPageEl);
+}
+
 function onSubscribe() {
-    homeEl.style.display = "none";
-    moviePageEl.style.display = "none";
-    aboutPageEl.style.display = "none";
-    subscribePageEl.style.display = "block";
-    thankYouPageEl.style.display = "none";
     document.title = "Subscribe - Vidora";
+    showPage(subscribePageEl);
 }
 
 function buyPlan(plan) {
-    alert(`You selected ${plan} plan`);
-    subscribePageEl.style.display = "none";
-    thankYouPageEl.style.display = "block";
-    document.title = "Thank You - Vidora";
+    alert(`Thank you for choosing ${plan} plan!`);
+    document.title = "Welcome to Vidora!";
+    showPage(thankYouPageEl);
 }
 
-// ---------------- FILTER MOVIES ----------------
-async function produceFilteredArray() { 
-    const genre = genreFilterEl.value; 
-    const language = languageFilterEl.value; 
-
-    try {
-        const res = await fetch(`${API_BASE}/movies`);
-        const movies = await res.json();
-        return movies.filter(m => 
-            (genre === "" || m.genres.includes(genre)) &&
-            (language === "" || m.language === language)
-        );
-    } catch (err) {
-        console.error("Filter failed:", err);
-        return [];
+// UI helpers
+function showLoading(show) {
+    // Simple loading state - you can enhance this with a spinner
+    if (show) {
+        moviesDisplayEl.innerHTML = '<p>Loading movies...</p>';
     }
 }
 
-async function onFilter(){ 
-    const filtered = await produceFilteredArray();
-    renderMovies(filtered);  
-    document.getElementById("filteredMovies").textContent = "Filtered Movies";
+function showError(message) {
+    moviesDisplayEl.innerHTML = `<p style="color: #ff6b6b; text-align: center; padding: 20px;">${message}</p>`;
 }
-filterBtnEl.addEventListener("click", onFilter);
 
-// ---------------- INITIALIZE ----------------
-fetchMovies();
+// Event listeners when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Navigation
+    backHomeEl.addEventListener('click', backHome);
+    homeIconEl.addEventListener('click', backHome);
+    
+    // Search
+    searchEl.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') searchMovie();
+    });
+    
+    // Filters
+    filterBtnEl.addEventListener('click', onFilter);
+    
+    // Load movies
+    fetchMovies();
+});
+
+// Make functions available globally
+window.openMovie = openMovie;
+window.onAbout = onAbout;
+window.onSubscribe = onSubscribe;
+window.buyPlan = buyPlan;
+window.backHome = backHome;
+window.searchMovie = searchMovie;
